@@ -54,18 +54,21 @@ const jsPuns = document.querySelectorAll('option[data-theme="js puns"]');
 const heartJS = document.querySelectorAll('option[data-theme="heart js"]');
 //Filtering TShirt and Color Options upon selection
 colorOptions.disabled = true;
-designOptions.addEventListener('change', ()=>{
+designOptions.addEventListener('change', (e)=>{
+    const element = e.target;
     colorOptions.disabled = false;
-    if(designOptions.value ==='js puns'){
-        colorOptions.value = 'Select a design theme above';
+    colorOptions[0].innerHTML = 'Pick a color';
+
+    if(element.value ==='js puns'){    
+        colorOptions.value = 'Pick a color';
             for(let i = 0 ;i<heartJS.length; i++){
                 heartJS[i].style.display = 'none';
             }
             for(let i = 0 ;i<jsPuns.length; i++){
                 jsPuns[i].style.display = 'block';
             }
-    } else if(designOptions.value ==='heart js'){
-        colorOptions.value = 'Select a design theme above';
+    } else if(element.value ==='heart js'){
+        colorOptions.value = 'Pick a color';
             for(let i = 0 ;i<heartJS.length; i++){
                 heartJS[i].style.display = 'block';
             }
@@ -80,7 +83,6 @@ designOptions.addEventListener('change', ()=>{
 =========================*/
 //Declare activities and cost variables
 const registeredActivities = document.querySelector('#activities');
-const activitiesBox = document.querySelector('#activities-box');
 const totalCost = document.querySelector('#activities-cost');
 let totalPrice =0;
 //Event listener on selection of activity and Total Price calculation
@@ -137,7 +139,7 @@ paymentInfo.addEventListener('change', e=>{
 //Declare form and label variables
 const userName = document.querySelector('#name');
 const emailAddress = document.querySelector('#email');
-const cardNumber = document.querySelector('#cc-num');
+const paymentType = document.getElementById('payment');
 const zipCode = document.querySelector('#zip');
 const cvvCode= document.querySelector('#cvv');
 const activityList = document.querySelectorAll('[type="checkbox"]');
@@ -177,33 +179,35 @@ form.addEventListener('submit' ,e=>{
             dataIsValid(emailAddress);
         }
 
-    let card = ccNum.value;
-    let cardValidate = /^[\d]{13,16}$/.test(card);
-        if(!cardValidate){
-            e.preventDefault();
-            dataInvalid(ccNum);
-        }else {
-            dataIsValid(ccNum);
-        }
+        if(paymentType.value ==="credit-card"){
+            let card = ccNum.value;
+            let cardValidate = /^[\d]{13,16}$/.test(card);
+                if(!cardValidate){
+                    e.preventDefault();
+                    dataInvalid(ccNum);
+                }else {
+                    dataIsValid(ccNum);
+                }
 
-    let zip = zipCode.value;
-    let zipValidate = /^[\d]{5}$/.test(zip);
-        if(!zipValidate){
-            e.preventDefault();
-            dataInvalid(zipCode);
-        }else {
-            dataIsValid(zipCode);
+            let zip = zipCode.value;
+            let zipValidate = /^[\d]{5}$/.test(zip);
+                if(!zipValidate){
+                    e.preventDefault();
+                    dataInvalid(zipCode);
+                }else {
+                    dataIsValid(zipCode);
+                }
+        
+            let cvv = cvvCode.value;
+            let cvvValidate = /^[\d]{3}$/.test(cvv);
+                if(!cvvValidate){
+                    e.preventDefault();
+                    dataInvalid(cvvCode);
+                }else {
+                    dataIsValid(cvvCode);
+                }
         }
-
-    let cvv = cvvCode.value;
-    let cvvValidate = /^[\d]{3}$/.test(cvv);
-        if(!cvvValidate){
-            e.preventDefault();
-            dataInvalid(cvvCode);
-        }else {
-            dataIsValid(cvvCode);
-        }
-            
+       
     if(totalPrice == 0){
         e.preventDefault();
         dataInvalid(totalCost);
