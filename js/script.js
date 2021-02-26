@@ -16,16 +16,18 @@ FSJS Project 3 - Interactive Form
 =========================*/
 //Set focus on first inputfield
 const inputText = document.querySelector('[type="text"]');
+const activityList = document.querySelectorAll('[type="checkbox"]');
 inputText.focus();
 //Set highlights on activity selection
-for(let i=0; i<activities.length; i++){
-    activities[i].addEventListener('focus', e=>{
+for(let i=0; i<activityList.length; i++){
+    activityList[i].addEventListener('focus', e=>{
         e.target.parentNode.classList.add('focus');
     });
-    activities[i].addEventListener('blur', e=>{
+    activityList[i].addEventListener('blur', e=>{
         e.target.parentNode.classList.remove('focus');
     });
 }
+
 
 /*=========================
 2. Job Role filtering
@@ -142,7 +144,6 @@ const emailAddress = document.querySelector('#email');
 const paymentType = document.getElementById('payment');
 const zipCode = document.querySelector('#zip');
 const cvvCode= document.querySelector('#cvv');
-const activityList = document.querySelectorAll('[type="checkbox"]');
 const form = document.querySelector('[method="post"]');
 //Function of checking invalid data
 function dataInvalid(dataInput){
